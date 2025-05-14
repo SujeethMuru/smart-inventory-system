@@ -18,9 +18,25 @@ class InventoryManager:
         #     return  None
 
     def update_stock(self, name, quantity_change):
-        pass
+        #Look up product by name
+        product = self.get_product(name)
+
+        #Handle case where product doesn't exist
+        if product is None:
+            return False
+        
+        #calculate future stock after exchange
+        new_quanitity = product.current_quantity + quantity_change
+        #protect against going negative
+        if new_quanitity < 0:
+            return False
+        
+        #Safely update the stock
+        product.current_quantity = new_quanitity
+        return True #confirm success
 
     def list_low_stock(self):
+        # returns list of stock that is lower than  or equal to minimum threshold
         restock_list = []
         for product in self.products.values():
             if product.needs_restock():
