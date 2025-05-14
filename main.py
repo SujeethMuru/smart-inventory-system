@@ -1,11 +1,14 @@
 from product import Product 
 from inventory import InventoryManager
 
-coke = Product("Coke", "Bevarage", 5, 1.50, 10)
-# print("Does", coke.name, "need restock?", coke.needs_restock())
-
-sprite = Product("Sprite", "Bevarage", 6, 2.00, 10)
+#create inventory manager object
 manager = InventoryManager()
-manager.add_product(sprite)
-# print(manager.products)
-print(sprite)
+manager.add_product(Product("Coke", "Bevarage", 2, 1.50, 5))
+manager.add_product(Product("Water", "Beverage", 10, 1.00, 5))
+manager.add_product(Product("Juice", "Beverage", 3, 2.00, 4))
+
+
+print("Low stock items:")
+for product in manager.list_low_stock():
+    print(product)
+

@@ -7,13 +7,24 @@ class InventoryManager:
         self.products[product.name] = product
 
     def remove_product(self, name):
-        pass
+        return self.products.pop(name, None)
 
-    def get_product(self,name):
-        pass
+    def get_product(self, name):
+        return self.products.get(name, None)
+
+        # if name in self.products:
+        #     return self.products[name]
+        # else:
+        #     return  None
 
     def update_stock(self, name, quantity_change):
         pass
 
     def list_low_stock(self):
-        pass
+        restock_list = []
+        for product in self.products.values():
+            if product.needs_restock():
+                restock_list.append(product)
+
+        return restock_list
+
