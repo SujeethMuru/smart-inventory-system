@@ -44,3 +44,10 @@ class InventoryManager:
 
         return restock_list
 
+    def search_by_name(self, query):
+        #allows for search by name inputing query and returns list of products that match query
+        matches = []
+        for product in self.products.values():
+            if query.lower() in product.name.lower():
+                matches.append(product)
+        return matches
