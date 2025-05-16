@@ -8,9 +8,9 @@ from db import (
     update_product_in_db
 )
 from product import Product
-
 from product import Product
 from db import create_table
+import os
 
 app = Flask(__name__)
 create_table()
@@ -82,5 +82,6 @@ def edit_product(name):
     return render_template("edit_product.html", product=product_data)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(debug=True, host="0.0.0.0", port=port)
     
