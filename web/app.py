@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, redirect
+import os
+from flask import Flask, render_template, request, redirect, session
 from db import (
     create_table,
     add_product_to_db,
@@ -8,11 +9,12 @@ from db import (
     update_product_in_db
 )
 from product import Product
-from product import Product
-from db import create_table
-import os
+
 
 app = Flask(__name__)
+app.secret_key = "super-secret-dev-key"
+ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD")
+
 create_table()
 
 # Sample inventory setup
@@ -33,8 +35,29 @@ def inventory_page():
 
     return render_template("inventory.html", products=filtered, search=query)
 
+@app.route("/admin", methods=["GET", "POST"])
+def admin_login():
+    if request.method == "POST":
+        password = request.form.get("password")
+        if password == ADMIN_PASSWORD:
+            session["admin_logged_in"] = True
+            return redirect("/")
+        else:
+            return "❌ Incorrect password", 401
+    
+    return ''' 
+        <h2>🔐 Admin Login</h2>
+        <form method="post">
+            <input type="password" name="password" placeholder="Enter admin password" required>
+            <button type="submit">Login</button>
+        </form>
+    '''
+
 @app.route("/add", methods=["GET", "POST"])
 def add_product():
+    if not session.get("admin_logged_in"):
+        return redirect("/admin")
+    
     if request.method == "POST":
         name = request.form.get("name")
         category = request.form.get("category")
@@ -56,11 +79,17 @@ def add_product():
 
 @app.route("/delete/<name>")
 def delete_product(name):
+    if not session.get("admin_logged_in"):
+        return redirect("/admin")
+    
     delete_product_from_db(name)
     return redirect("/")
 
 @app.route("/edit/<name>", methods=["GET", "POST"])
 def edit_product(name):
+    if not session.get("admin_logged_in"):
+        return redirect("/admin")
+    
     product_data = get_product_from_db(name)
 
     if not product_data:
