@@ -53,6 +53,11 @@ def admin_login():
         </form>
     '''
 
+@app.route("/logout")
+def logout():
+    session.pop("admin_logged_in", None)
+    return redirect("/admin")
+
 @app.route("/add", methods=["GET", "POST"])
 def add_product():
     if not session.get("admin_logged_in"):

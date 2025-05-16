@@ -12,6 +12,12 @@
         <button type="submit">Search</button>
      </form>
 
+     {% if session.admin_logged_in %}
+        <p>
+            Logged in as Admin - <a href="/logout">🔓 Logout</a>
+        </p>
+    {% endif %}
+    
      <!-- Add product link-->
      <a href="/add">➕ Add New Product</a>
 
