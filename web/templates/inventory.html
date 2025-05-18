@@ -1,27 +1,26 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Smart Inventory</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+    {% block title %}Smart Inventory{% endblock %}
+    
+    {% block content %}
     <h1>Product Inventory</h1>
 
     <!-- 🔍 Search Form-->
-     <form method="get" action="/">
+    <form method="get" action="/">
         <input type="text" name="search" placeholder="Search products..." value="{{search}}">
         <button type="submit">Search</button>
-     </form>
+    </form>
 
-     {% if session.admin_logged_in %}
+    {% if session.admin_logged_in %}
         <p>
             Logged in as Admin - <a href="/logout">🔓 Logout</a>
         </p>
     {% endif %}
     
-     <!-- Add product link-->
-     <a href="/add">➕ Add New Product</a>
+    <!-- Add product link-->
+    <a href="/add">➕ Add New Product</a>
 
-     <!-- 📦 Product List -->
+    <!-- 📦 Product List -->
     <ul>
         {% for product in products %}
         <li>
@@ -32,5 +31,4 @@
         </li>
         {% endfor %}
     </ul>
-</body>
-</html>
+{% endblock %}
