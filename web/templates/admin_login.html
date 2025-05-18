@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Admin Logic{% endblock %}
+
+{% block content %}
+<h2>🔐 Admin Login</h2>
+<form method="post">
+    <div>
+        <label>Password:</label><br>
+        <input type="password" name="password" placeholder="Enter admin password" required>
+    </div>
+    <br>
+    <button type="submit">Login</button>
+</form>
+{% endblock %}

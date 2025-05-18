@@ -45,13 +45,7 @@ def admin_login():
         else:
             return "❌ Incorrect password", 401
     
-    return ''' 
-        <h2>🔐 Admin Login</h2>
-        <form method="post">
-            <input type="password" name="password" placeholder="Enter admin password" required>
-            <button type="submit">Login</button>
-        </form>
-    '''
+    return render_template("admin_login.html")
 
 @app.route("/logout")
 def logout():
