@@ -98,3 +98,12 @@ label {
     font-weight: bold;
     color: #333;
 }
+
+/* categories in cards fix */
+input[type="text"],
+input[type="number"],
+input[type="password"] {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
